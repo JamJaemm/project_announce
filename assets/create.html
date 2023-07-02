@@ -1,0 +1,100 @@
+<!-- 이상우 뉴스생성 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+    <!-- Bootstrap CSS -->
+    <!--  rel="stylesheet" 가 들어가야 CSS -->
+    <link
+      rel="stylesheet" 
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- font-awesome CSS -->
+    <script
+      src="https://kit.fontawesome.com/727ce840af.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 날짜 CDN -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <title>게시글 작성</title>
+  </head>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
+
+  <script>
+  // 뒤로가기 버튼
+  function back() {
+    location.href = 'javascript:history.back();'
+  }
+  </script>
+
+  <body class="body">
+    <link rel="stylesheet" href="./css/create.css" />
+    <div class="wrap">
+      <h1 class="post">게시글 작성</h1> <!-- action에는 localhost뒤에 들어가는 주소 -->
+      <form class="form-group" action="/api/news" method="POST" enctype="multipart/form-data">
+        <div class="label" style="float: left">
+          <!-- 제목 입력 -->
+          <label class="post" style="font-weight: bold">제목 :</label>
+          <input type="text" id="title" name="title" placeholder="제목을 입력해 주세요." />
+        </div>
+
+        <!-- 카테고리 설정 -->
+        <div class="content" style="float: right">
+          <input class="form-check-input" type="radio" name="category" id="flexRadioDefault1" value="해외" checked>
+          <label class="form-check-label" for="flexRadioDefault1" value="해외">해외축구</label>
+          <br />
+          <input class="form-check-input" type="radio" name="category" id="flexRadioDefault2" value="국내" checked>
+          <label class="form-check-label" for="flexRadioDefault2" value="국내">국내축구</label>
+          <div id="categoryresult"></div>
+        </div>
+        <br />
+
+         <!-- 게시글 내용 입력 -->
+        <div class="label">
+          <label style="float: left"></label>
+          <textarea id="content" class="form-control" type="text" name ="content" rows="20" placeholder="내용을 입력해 주세요."></textarea>
+          <!-- <script src='./js/post.js'></script> -->
+        </div>
+
+        <!-- 사진 업로드 -->
+      <div class="btncls">
+          <label for='files'></label>
+          <input type="file" name="image" id="image"> 
+      </div>
+
+      <!-- 게시글 전체 업로드 -->
+        <button class="btn btn-primary" type="submit">작성 </button>
+      </form>
+      <button class="btn btn-primary" onclick="back()">뒤로 가기 </button>
+    </div>
+    </div>
+    <!-- <script src='./js/post.js'></script> -->
+  </body>
+</html>

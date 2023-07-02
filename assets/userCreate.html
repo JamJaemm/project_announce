@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>축스피드 회원가입.</title>
+    <link rel="stylesheet" href="./css/userCreate.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <nav>
+        <div class="nav-item">
+            <h1 class="logo">
+                <a href="/"><img src="./img/logo.png" width="40" alt="logo" />축스피드</a>
+            </h1>
+        </div>
+        <div class="nav-item">
+            <ul class="menu">
+                <li><a href="/create.html">Write</a></li>
+                <li><a href="/userCreate.html">SignUp</a></li>
+            </ul>
+        </div>
+        <div class="nav-item user-form">
+            <div class="login-form">
+                <input id="id" type="text" placeholder="ID 입력" />
+                <input id="password" type="password" placeholder="PW 입력" autocomplete="off" />
+                <button onclick="sign_in()">로그인</button>
+            </div>
+            <!-- login user template -->
+        </div>
+        <div class="nav-item logout-btn blind">
+            <button onclick="log_out()">로그아웃</button>
+        </div>
+    </nav>
+    <script>
+        function submitForm() {
+            // 폼 데이터 수집
+            const id = document.getElementById('id').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const name = document.getElementById('name').value;
+            const nickname = document.getElementById('nickname').value;
+            const message = document.getElementById('message').value;
+
+            // 폼 데이터 객체 생성
+            const formData = {
+                id: id,
+                password: password,
+                confirmPassword: confirmPassword,
+                name: name,
+                nickname: nickname,
+                message: message
+            };
+
+            // POST 요청 보내기
+            fetch('http://localhost:3018/api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("회원가입이 완료되었습니다.");
+                        window.location.href = "/";
+                    } else if (response.status === 409) {
+                        // 이미 존재하는 ID나 닉네임일 경우
+                        response.json().then(data => {
+                            alert(data.message);
+                        });
+                    } else if (response.status === 400) {
+                        // 입력값에 오류가 있는 경우
+                        response.json().then(data => {
+                            alert(data.errorMessage);
+                        });
+                    } else {
+                        // 기타 오류
+                        alert("회원가입에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("서버 오류가 발생했습니다.");
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="main-container">
+        <h1>회원가입</h1>
+        <form id="signupForm">
+            <div class="input">
+                <div class="left-input">
+                    <label for="id">ID :</label>
+                    <label for="password">비밀번호 :</label>
+                    <label for="confirmPassword">비밀번호 다시 입력 :</label>
+                    <label for="name">이름 :</label>
+                    <label for="nickname">닉네임 :</label>
+                    <label for="message">나의 한마디 :</label>
+                </div>
+                <div class="right-input">
+                    <input type="text" id="id" name="id" required><br>
+                    <input type="password" id="password" name="password" required><br>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                    <input type="text" id="name" name="name" required><br>
+                    <input type="text" id="nickname" name="nickname" required><br>
+                    <input type="text" id="message" name="message"><br>
+                </div>
+            </div>
+            <button class="btn" type="button" onclick="submitForm()">회원가입</button>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
